@@ -132,21 +132,21 @@ class RecipeCard extends HTMLElement {
 
     if (ratData) {
       let stars = document.createElement("span");
-      stars.textContent = ratingData["ratingValue"];
+      stars.textContent = ratData["ratingValue"];
       rat.appendChild(stars);
 
-      let count = Math.round(Number(ratingData["ratingValue"]));
+      let count = Math.round(Number(ratData["ratingValue"]));
       const star_img = document.createElement("img");
       star_img.alt = `${count} stars`;
       star_img.src = `assets/images/icons/${count}-star.svg`;
       rat.appendChild(star_img);
 
-      let ratings = document.createElement("span");
+      let rats = document.createElement("span");
       let ratingCount = () => {
         return ratingData["ratingCount"] ? ratingData["ratingCount"] : ratingData["reviewCount"];
       };
-      ratings.textContent = `(${ratingCount()})`;
-      rat.appendChild(ratings);
+      rats.textContent = `(${ratingCount()})`;
+      rat.appendChild(rat);
     } else {
 
       let span = document.createElement("span");
