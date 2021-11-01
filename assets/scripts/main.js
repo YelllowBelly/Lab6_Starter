@@ -44,25 +44,24 @@ async function fetchRecipes() {
 
     // Part 1 Expose - TODO
 
+    let count = 0;
+
     for (let i = 0; i < recipes.length; i++) {
-      try {
-        let response = await fetch(recipes[i]);
-        var data = await response.json();
-      } catch (error) {
-        console.log(error);
-      }
+      fetch(recipes[i])
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          recipeData[recipes[i]] = data;
+          count++;
 
-      recipeData[recipes[i]] = data;
-    }
-
-    let init = 0;
-    for (let key in recipeData) {
-      init+=1;
-    }
-    if (init === recipes.length) {
-      resolve(true);
-    } else {
-      reject(false);
+          if (count === recipes.length) {
+            resolve(true);
+          }
+        })
+        .catch(() => {
+          reject(false);
+        })
     }
   });
 }
@@ -80,7 +79,7 @@ function createRecipeCards() {
     let card = document.createElement("recipe-card");
     card.data = recipeData[recipes[i]];
     let main = document.querySelector("main");
-    main.appendChild(recipeCard);
+    main.appendChild(card);
   }
 
 }

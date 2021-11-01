@@ -104,8 +104,8 @@ class RecipeCard extends HTMLElement {
 
     const image = document.createElement("img");
     let img = () => {
-      let picture = searchForKey(data, "thumbnail");
-      return picture ? picture : searchForKey(data["@graph"][2], "contentUrl");
+      let pc = searchForKey(data, "thumbnail");
+      return pc ? pc : searchForKey(data["@graph"][2], "contentUrl");
     };
 
     image.src = img();
@@ -119,49 +119,50 @@ class RecipeCard extends HTMLElement {
     const url = document.createElement("a");
     url.href = getUrl(data);
     url.text = searchForKey(data, "headline");
-    pTitle.appendChild(url);
+    title.appendChild(url);
+
 
     const org = document.createElement("p");
     org.className = "organization";
     org.textContent = getOrganization(data);
     card.appendChild(org);
 
-    let rat = document.createElement("div");
-    rat.className = "rating";
-    let ratData = searchForKey(data, "aggregateRating");
+    let r = document.createElement("div");
+    r.className = "rating";
+    let rData = searchForKey(data, "aggregateRating");
 
-    if (ratData) {
+    if (rData) {
       let stars = document.createElement("span");
-      stars.textContent = ratData["ratingValue"];
-      rat.appendChild(stars);
+      stars.textContent = rData["ratingValue"];
+      r.appendChild(stars);
 
-      let count = Math.round(Number(ratData["ratingValue"]));
+      let count = Math.round(Number(rData["ratingValue"]));
       const starImg = document.createElement("img");
       starImg.alt = `${count} stars`;
       starImg.src = `assets/images/icons/${count}-star.svg`;
-      rat.appendChild(starImg);
+      r.appendChild(starImg);
 
-      let rats = document.createElement("span");
+      let ratings = document.createElement("span");
       let ratingCount = () => {
-        return ratData["ratingCount"] ? ratData["ratingCount"]: ratData["reviewCount"];
+        return rData["ratingCount"] ? rData["ratingCount"] : rData["reviewCount"];
       };
-      rats.textContent = `(${ratingCount()})`;
-      rats.appendChild(ratings);
+      ratings.textContent = `(${ratingCount()})`;
+      r.appendChild(ratings);
     } else {
       let span = document.createElement("span");
       span.textContent = "No Reviews";
-      rat.appendChild(span);
+      r.appendChild(span);
     }
-    card.appendChild(rat);
+    card.appendChild(r);
 
-    const time = document.createElement("time");
+    const t = document.createElement("time");
     let getText = () => {
-      let time = searchForKey(data, "totalTime");
-      return time ? convertTime(time) : convertTime(searchForKey(data, "prepTime"));
+      let t = searchForKey(data, "totalTime");
+      return t ? convertTime(t) : convertTime(searchForKey(data, "prepTime"));
     };
-    time.textContent = getText();
-    card.appendChild(time);
-    
+    t.textContent = getText();
+    card.appendChild(t);
+
     const ingredients = document.createElement("p");
     ingredients.className = "ingredients";
     ingredients.textContent = createIngredientList(
