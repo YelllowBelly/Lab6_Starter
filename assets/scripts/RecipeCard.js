@@ -112,14 +112,14 @@ class RecipeCard extends HTMLElement {
     image.alt = searchForKey(data, "headline");
     card.appendChild(image);
 
-    const paragraph_title = document.createElement("p");
-    paragraph_title.className = "title";
-    card.append(paragraph_title);
+    const title = document.createElement("p");
+    title.className = "title";
+    card.append(title);
 
-    const ref = document.createElement("a");
-    ref.href = getUrl(data);
-    ref.text = searchForKey(data, "headline");
-    pTitle.appendChild(ref);
+    const url = document.createElement("a");
+    url.href = getUrl(data);
+    url.text = searchForKey(data, "headline");
+    pTitle.appendChild(url);
 
     const org = document.createElement("p");
     org.className = "organization";
@@ -136,19 +136,18 @@ class RecipeCard extends HTMLElement {
       rat.appendChild(stars);
 
       let count = Math.round(Number(ratData["ratingValue"]));
-      const star_img = document.createElement("img");
-      star_img.alt = `${count} stars`;
-      star_img.src = `assets/images/icons/${count}-star.svg`;
-      rat.appendChild(star_img);
+      const starImg = document.createElement("img");
+      starImg.alt = `${count} stars`;
+      starImg.src = `assets/images/icons/${count}-star.svg`;
+      rat.appendChild(starImg);
 
       let rats = document.createElement("span");
       let ratingCount = () => {
-        return ratingData["ratingCount"] ? ratingData["ratingCount"] : ratingData["reviewCount"];
+        return ratData["ratingCount"] ? ratData["ratingCount"]: ratData["reviewCount"];
       };
       rats.textContent = `(${ratingCount()})`;
-      rat.appendChild(rat);
+      rats.appendChild(ratings);
     } else {
-
       let span = document.createElement("span");
       span.textContent = "No Reviews";
       rat.appendChild(span);
@@ -162,7 +161,7 @@ class RecipeCard extends HTMLElement {
     };
     time.textContent = getText();
     card.appendChild(time);
-
+    
     const ingredients = document.createElement("p");
     ingredients.className = "ingredients";
     ingredients.textContent = createIngredientList(
@@ -172,6 +171,7 @@ class RecipeCard extends HTMLElement {
 
     this.shadow.appendChild(card);
     this.shadow.appendChild(styleElem);
+
   }
 }
 
