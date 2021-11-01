@@ -59,7 +59,7 @@ async function fetchRecipes() {
     for (let key in recipeData) {
       init+=1;
     }
-    if (size === recipes.length) {
+    if (init === recipes.length) {
       resolve(true);
     } else {
       reject(false);
